@@ -82,12 +82,12 @@ function Show-Tail {
         [parameter(Mandatory=$true)] [string] $file,
         [parameter(Mandatory=$false, HelpMessage="Number of lines to show")]
             [Alias("n")] [int] $lastLines = $null,
-        [parameter(Mandatory=$false, HelpMessage="What watch the file for changes?")]
+        [parameter(Mandatory=$false, HelpMessage="Want to watch the file for changes?")]
             [switch] $Watch
     )
     begin {
         if (-not(Test-Path $file)) {
-            throw "File $($file) not found. Nothing to watch."
+            throw "File $($file) not found. Nothing to show."
         }
     }
     process {
