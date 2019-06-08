@@ -3,9 +3,7 @@
 . $( $(Split-Path $script:MyInvocation.MyCommand.Path) + "\utility_profile.ps1" )
 
 # Print the weather
-try {
-    Get-Body $(Invoke-WebRequest "wttr.in/tulsa?0nQT") -ExcludePRE
-} catch {}
+Get-Weather
 
 if (Test-IsModuleInstalled -Name "posh-git") {
     <#

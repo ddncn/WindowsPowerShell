@@ -54,6 +54,18 @@ function Remove-Tag {
     }
 }
 
+function Get-Weather {
+    param (
+        $Location = "tulsa"
+    )
+    process {
+        $URL = "wttr.in/$($Location)?0nQT"
+        try {
+            Get-Body $(Invoke-WebRequest $URL) -ExcludePRE
+        } catch {}
+    }
+}
+
 function Test-IsAdmin
 {
     <#
