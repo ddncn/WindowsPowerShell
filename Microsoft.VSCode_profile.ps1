@@ -4,6 +4,11 @@
 #>
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
 
+# Print the weather
+try {
+    Get-Body $(Invoke-WebRequest "wttr.in/tulsa?0nQT") -ExcludePRE
+} catch {}
+
 # Dot-source required resources.
 . $( $(Split-Path $script:MyInvocation.MyCommand.Path) + "\utility_profile.ps1" )
 

@@ -2,6 +2,11 @@
 # Dot-source required resources.
 . $( $(Split-Path $script:MyInvocation.MyCommand.Path) + "\utility_profile.ps1" )
 
+# Print the weather
+try {
+    Get-Body $(Invoke-WebRequest "wttr.in/tulsa?0nQT") -ExcludePRE
+} catch {}
+
 if (Test-IsModuleInstalled -Name "posh-git") {
     <#
         posh-git powershell module
@@ -35,4 +40,10 @@ if (Test-IsDotNetCoreInstalled) {
             [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
             }
     }
+}
+
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
 }
