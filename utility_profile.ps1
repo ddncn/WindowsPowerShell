@@ -32,7 +32,12 @@ function Get-Body {
         if ($ExcludePRE) {
             $body = Remove-Tag -HTML $body -Tag "pre"
         }
-        # $body = $body.TrimEnd()
+
+        # decode the string for console
+        if ($PSVersionTable.PSVersion.Major -eq 5) {
+            Add-Type -AssemblyName System.Web
+        }
+        $body = [System.Web.HttpUtility]::HtmlDecode($body)
 
         return $body
     }
@@ -57,12 +62,17 @@ function Remove-Tag {
 function Get-Weather {
     param (
         $Location = "tulsa"
+        ,[switch]$Web
     )
     process {
-        $URL = "wttr.in/$($Location)?0nQT"
-        try {
-            Get-Body $(Invoke-WebRequest $URL) -ExcludePRE
-        } catch {}
+        $URL = "http://wttr.in/$($Location)?0nQT"
+        if ($Web) {
+            Start-Process $URL
+        } else {
+            try {
+                Get-Body $(Invoke-WebRequest $URL) -ExcludePRE
+            } catch {}
+        }
     }
 }
 
